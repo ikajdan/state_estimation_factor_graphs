@@ -25,6 +25,18 @@ cd /root/ws
 colcon build --symlink-install
 ```
 
+## Run the Simulation
+
+1. Source the workspace:
+```
+source ./install/setup.bash
+```
+
+2. Run the simulation:
+```
+ros2 launch robot sim.launch.py world:=./src/robot/worlds/main.world
+```
+
 # License
 
 This repository is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
