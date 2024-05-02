@@ -9,6 +9,7 @@ RUN ln -snf /usr/share/zoneinfo/Europe/Warsaw /etc/localtime && \
     echo '! shopt -oq posix && source /etc/bash_completion' >> /root/.bashrc && \
     echo 'export ROS_DOMAIN_ID=222' >> /root/.bashrc && \
     echo 'source /opt/ros/${ROS_DISTRO}/setup.bash' >> /root/.bashrc && \
+    echo 'export PS1="🐢 $PS1"' >> /root/.bashrc && \
     mkdir -p /root/ws/src
 
 COPY ./src/ /root/ws/src/
@@ -16,6 +17,7 @@ COPY ./src/ /root/ws/src/
 RUN apt-get update -q && \
     apt-get install -y --no-install-recommends \
         bash-completion \
+        command-not-found \
         curl \
         iputils-ping \
         net-tools \
