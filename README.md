@@ -5,22 +5,22 @@ This repository contains a ROS2 localization demo. The demo consists of a simple
 ## Setup the Environment
 
 1. Clone the repository:
-```
+```bash
 git clone --recursive git@github.com:ikajdan/ros_localization_demo.git
 ```
 
 2. Build the container:
-```
+```bash
 ./build.sh
 ```
 
 3. Run the container:
-```
+```bash
 ./run.sh
 ```
 
 4. Build the workspace:
-```
+```bash
 cd /root/ws
 colcon build --symlink-install
 ```
@@ -28,19 +28,24 @@ colcon build --symlink-install
 ## Run the Simulation
 
 1. Source the workspace:
-```
+```bash
 source ./install/setup.bash
 ```
 
 2. Run the simulation:
-```
+```bash
 ros2 launch robot sim.launch.py world:=./src/robot/worlds/main.world
 rviz2 -d ./src/config/drive_simulation.rviz
 ```
 
-# View Robot Model
-
+If Gazebo fails to start, try to manually spawn the robot:
+```bash
+ros2 run gazebo_ros spawn_entity.py -topic robot_description -entity robot_name
 ```
+
+## View Robot Model
+
+```bash
 ros2 launch robot rsp.launch.py
 ros2 run joint_state_publisher_gui joint_state_publisher_gui
 rviz2 -d ./src/config/view_robot.rviz
