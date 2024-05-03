@@ -43,6 +43,12 @@ If Gazebo fails to start, try to manually spawn the robot:
 ros2 run gazebo_ros spawn_entity.py -topic robot_description -entity robot_name
 ```
 
+## Control the Robot
+
+```bash
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
+```
+
 ## View Robot Model
 
 ```bash
