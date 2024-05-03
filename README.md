@@ -35,6 +35,15 @@ source ./install/setup.bash
 2. Run the simulation:
 ```
 ros2 launch robot sim.launch.py world:=./src/robot/worlds/main.world
+rviz2 -d ./src/config/drive_simulation.rviz
+```
+
+# View Robot Model
+
+```
+ros2 launch robot rsp.launch.py
+ros2 run joint_state_publisher_gui joint_state_publisher_gui
+rviz2 -d ./src/config/view_robot.rviz
 ```
 
 # License
