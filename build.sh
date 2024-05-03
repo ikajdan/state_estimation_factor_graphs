@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t ros_localization_demo .
+docker build -t ros_robot_demo .

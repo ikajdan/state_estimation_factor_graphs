@@ -8,6 +8,6 @@ fi
 docker run \
   -it \
   --volume "${PWD}"/src:/root/ws/src \
-  --name=f1tenth_docking_ros \
-  ros_localization_demo \
+  --name=ros_robot_demo \
+  ros_robot_demo \
   bash
