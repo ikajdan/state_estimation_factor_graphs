@@ -35,7 +35,7 @@ source ./install/setup.bash
 2. Run the simulation:
 ```bash
 ros2 launch robot sim.launch.py world:=./src/robot/worlds/main.world
-rviz2 -d ./src/config/drive_simulation.rviz
+rviz2 -d ./src/robot/config/view_main.rviz
 ```
 
 If Gazebo fails to start, try to manually spawn the robot:
@@ -54,7 +54,14 @@ ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r /cmd_vel:=/di
 ```bash
 ros2 launch robot rsp.launch.py
 ros2 run joint_state_publisher_gui joint_state_publisher_gui
-rviz2 -d ./src/config/view_robot.rviz
+rviz2 -d ./src/robot/config/view_robot.rviz
+```
+
+## Launch the SLAM Toolbox
+
+```bash
+ros2 launch slam_toolbox online_async_launch.py slam_params_file:=./src/robot/config/mapper_params_online_async.yaml use_sim_time:=true
+rviz2 -d ./src/robot/config/view_map.rviz
 ```
 
 # License
