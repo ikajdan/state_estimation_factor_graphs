@@ -60,7 +60,7 @@ rviz2 -d ./src/robot/config/view_robot.rviz
 ## Launch the SLAM Toolbox
 
 ```bash
-ros2 launch slam_toolbox online_async_launch.py slam_params_file:=./src/robot/config/mapper_params_online_async.yaml use_sim_time:=true
+ros2 launch robot slam.launch.py
 rviz2 -d ./src/robot/config/view_map.rviz
 ```
 
