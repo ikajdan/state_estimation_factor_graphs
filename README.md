@@ -35,13 +35,24 @@ source ./install/setup.bash
 2. Run the simulation:
 ```bash
 ros2 launch robot sim.launch.py world:=./src/robot/worlds/main.world
-rviz2 -d ./src/robot/config/view_main.rviz
+ros2 run rviz2 rviz2 -d ./src/robot/config/view_main.rviz --ros-args -p use_sim_time:=true
 ```
 
-If Gazebo fails to start, try to manually spawn the robot:
+> [!NOTE]
+> If Gazebo fails to start, try to manually spawn the robot:
+> ```bash
+> ros2 run gazebo_ros spawn_entity.py -topic robot_description -entity robot_name
+> ```
+
+3. Launch the localization node:
 ```bash
-ros2 run gazebo_ros spawn_entity.py -topic robot_description -entity robot_name
+ros2 launch robot localization.launch.py map:=./src/robot/maps/main.yaml
 ```
+
+4. Set the initial pose of the robot in RViz.
+
+> [!NOTE]
+> Make sure to set the fixed frame to `map`.
 
 ## Control the Robot
 
@@ -54,14 +65,14 @@ ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r /cmd_vel:=/di
 ```bash
 ros2 launch robot rsp.launch.py
 ros2 run joint_state_publisher_gui joint_state_publisher_gui
-rviz2 -d ./src/robot/config/view_robot.rviz
+ros2 run rviz2 rviz2 -d ./src/robot/config/view_robot.rviz --ros-args -p use_sim_time:=true
 ```
 
 ## Launch the SLAM Toolbox
 
 ```bash
 ros2 launch robot slam.launch.py
-rviz2 -d ./src/robot/config/view_map.rviz
+ros2 run rviz2 rviz2 -d ./src/robot/config/view_map.rviz --ros-args -p use_sim_time:=true
 ```
 
 # License
