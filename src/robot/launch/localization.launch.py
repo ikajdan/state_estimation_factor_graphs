@@ -39,7 +39,11 @@ def generate_launch_description():
 
     lifecycle_nodes = ["map_server", "amcl"]
 
-    remappings = [("/tf", "tf"), ("/tf_static", "tf_static")]
+    remappings = [
+        ("/tf", "tf"),
+        ("/tf_static", "tf_static"),
+        ("/odom", "/odometry/filtered"),
+    ]
 
     # Create our own temporary YAML files that include substitutions
     param_substitutions = {"use_sim_time": use_sim_time, "yaml_filename": map_yaml_file}
