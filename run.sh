@@ -1,7 +1,9 @@
 #!/bin/bash
 
-NAME=ros_robot_demo
-IMAGE=ros_robot_demo
+set -eu
+
+NAME=ros_differential_robot_simulation
+IMAGE=ros_differential_robot_simulation
 XSOCK=/tmp/.X11-unix
 XAUTH=/tmp/.docker.xauth
 
