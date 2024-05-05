@@ -37,7 +37,6 @@ source ./install/setup.bash
 ros2 launch robot sim.launch.py world:=./src/robot/worlds/main.world
 ros2 run rviz2 rviz2 -d ./src/robot/config/view_main.rviz --ros-args -p use_sim_time:=true
 ```
-
 > [!NOTE]
 > If Gazebo fails to start, try to manually spawn the robot:
 > ```bash
@@ -50,9 +49,13 @@ ros2 launch robot localization.launch.py map:=./src/robot/maps/main.yaml
 ```
 
 4. Set the initial pose of the robot in RViz.
-
 > [!NOTE]
 > Make sure to set the fixed frame to `map`.
+
+5. (Optional) Run the navigation node:
+```bash
+ros2 launch robot navigation.launch.py
+```
 
 ## Control the Robot
 
