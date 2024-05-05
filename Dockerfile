@@ -30,6 +30,7 @@ RUN apt-get update -q && \
         python3-pip \
         wget \
         ros-humble-rviz2 \
+        ros-humble-rviz-imu-plugin \
         ros-humble-joint-state-publisher-gui \
         ros-humble-teleop-twist-keyboard && \
     cd /root/ws && \

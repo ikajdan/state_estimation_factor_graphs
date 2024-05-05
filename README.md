@@ -56,26 +56,26 @@ The simulation is done in Gazebo, and the localization node is implemented using
     ros2 launch robot localization.launch.py map:=./src/robot/maps/main.yaml
     ```
 
-4. Set the initial pose of the robot in RViz.
-
-> [!NOTE]
-> Make sure to set the fixed frame to `map`.
-
-5. (Optional) Run the navigation node:
+4. (Optional) Run the navigation node:
 
     ```bash
     ros2 launch robot navigation.launch.py
     ```
 
-6. Launch the RViz visualization tool:
+5. Launch the RViz visualization tool:
 
     ```bash
     ros2 run rviz2 rviz2 -d ./src/robot/config/view_main.rviz --ros-args -p use_sim_time:=true
     ```
 
+6. Set the initial pose of the robot in RViz.
+
+    > [!NOTE]
+    > Make sure to set the fixed frame to `map`.
+
 ## Tools
 
-To control the robot, you can use the `teleop_twist_keyboard` package:
+To manually control the robot, you can use the `teleop_twist_keyboard` package:
 
 ```bash
 ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r /cmd_vel:=/diff_cont/cmd_vel_unstamped
