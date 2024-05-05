@@ -2,13 +2,20 @@ import os
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
 
 def generate_launch_description():
     package_name = "robot"
+
+    declare_gui_arg = DeclareLaunchArgument(
+        "gui",
+        default_value="true",
+        description='Set to "false" to run Gazebo without the GUI.',
+    )
 
     rsp = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -36,7 +43,8 @@ def generate_launch_description():
             ]
         ),
         launch_arguments={
-            "extra_gazebo_args": "--ros-args --params-file " + gazebo_params_file
+            "extra_gazebo_args": "--ros-args --params-file " + gazebo_params_file,
+            "gui": LaunchConfiguration("gui"),
         }.items(),
     )
 
@@ -60,5 +68,12 @@ def generate_launch_description():
     )
 
     return LaunchDescription(
-        [rsp, gazebo, spawn_entity, diff_drive_spawner, joint_broad_spawner]
+        [
+            declare_gui_arg,
+            rsp,
+            gazebo,
+            spawn_entity,
+            diff_drive_spawner,
+            joint_broad_spawner,
+        ]
     )
