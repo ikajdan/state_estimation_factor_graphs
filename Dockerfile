@@ -14,6 +14,8 @@ RUN ln -snf /usr/share/zoneinfo/Europe/Warsaw /etc/localtime && \
 
 COPY ./src/ /root/ws/src/
 
+WORKDIR /root/ws
+
 RUN apt-get update -q && \
     apt-get install -y --no-install-recommends \
         bash-completion \
@@ -33,7 +35,6 @@ RUN apt-get update -q && \
         ros-humble-rviz-imu-plugin \
         ros-humble-joint-state-publisher-gui \
         ros-humble-teleop-twist-keyboard && \
-    cd /root/ws && \
     rosdep update && \
     rosdep install --from-paths src --ignore-src -r -y -q && \
     apt-get clean && \

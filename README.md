@@ -27,7 +27,7 @@ The simulation is done in Gazebo, and the localization node is implemented using
 4. Build the workspace:
 
     ```bash
-    cd /root/ws && colcon build --symlink-install
+    colcon build --symlink-install
     ```
 
 ## Run the Simulation
