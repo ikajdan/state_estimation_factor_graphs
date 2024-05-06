@@ -38,7 +38,8 @@ amcl:
     z_rand: 0.5
     z_short: 0.05
     scan_topic: scan
-    odom_topic: "/odometry/filtered"
+    # odom_topic: "/odometry/filtered"
+    odom_topic: "/diff_cont/odom"
 
 bt_navigator:
   ros__parameters:

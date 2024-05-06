@@ -89,6 +89,6 @@ def generate_launch_description():
             spawn_entity,
             diff_drive_spawner,
             joint_broad_spawner,
-            ekf_spawner,
+            # ekf_spawner,
         ]
     )
