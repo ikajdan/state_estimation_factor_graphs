@@ -42,16 +42,16 @@
 
     <link name="chassis">
         <visual>
-            <origin xyz="0.15 0 0.075"/>
+            <origin xyz="0.17 0 0.06"/>
             <geometry>
-                <box size="0.3 0.3 0.15"/>
+                <cylinder radius="0.25" length="0.12"/>
             </geometry>
             <material name="orange"/>
         </visual>
         <collision>
-            <origin xyz="0.15 0 0.075"/>
+            <origin xyz="0.17 0 0.06"/>
             <geometry>
-                <box size="0.3 0.3 0.15"/>
+                <cylinder radius="0.25" length="0.12"/>
             </geometry>
         </collision>
         <xacro:inertial_box mass="0.5" x="0.3" y="0.3" z="0.15">
@@ -125,7 +125,7 @@
     <joint name="caster_wheel_joint" type="fixed">
         <parent link="chassis"/>
         <child link="caster_wheel"/>
-        <origin xyz="0.24 0 0"/>
+        <origin xyz="0.3 0 0"/>
     </joint>
 
     <link name="caster_wheel">

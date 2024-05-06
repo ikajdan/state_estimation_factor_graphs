@@ -70,8 +70,8 @@ The simulation is done in Gazebo, and the localization node is implemented using
 
 6. Set the initial pose of the robot in RViz.
 
-    > [!NOTE]
-    > Make sure to set the fixed frame to `map`.
+> [!NOTE]
+> Make sure to set the fixed frame to `map`.
 
 ## Tools
 
