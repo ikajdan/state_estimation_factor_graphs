@@ -18,7 +18,7 @@ slam_toolbox:
     mode: mapping
     # mode: localization
 
-    map_file_name: /root/ws/src/robot/maps/main
+    map_file_name: /root/ws/src/robot_simulation/maps/main
     # map_start_pose: [0.0, 0.0, 0.0]
     map_start_at_dock: true
 

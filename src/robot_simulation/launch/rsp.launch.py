@@ -11,7 +11,7 @@ from launch_ros.actions import Node
 def generate_launch_description():
     use_sim_time = LaunchConfiguration("use_sim_time")
 
-    pkg_path = os.path.join(get_package_share_directory("robot"))
+    pkg_path = os.path.join(get_package_share_directory("robot_simulation"))
     xacro_file = os.path.join(pkg_path, "description", "robot.urdf.xacro")
     robot_description_config = xacro.process_file(xacro_file)
 

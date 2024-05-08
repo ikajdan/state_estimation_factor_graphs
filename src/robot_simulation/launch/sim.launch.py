@@ -9,7 +9,7 @@ from launch_ros.actions import Node
 
 
 def generate_launch_description():
-    package_name = "robot"
+    package_name = "robot_simulation"
 
     declare_gui_arg = DeclareLaunchArgument(
         "gui",
@@ -74,7 +74,7 @@ def generate_launch_description():
         output="screen",
         parameters=[
             os.path.join(
-                get_package_share_directory("robot"),
+                get_package_share_directory("robot_simulation"),
                 "config",
                 "ekf.yaml",
             )

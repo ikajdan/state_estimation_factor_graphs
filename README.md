@@ -41,7 +41,7 @@ The simulation is done in Gazebo, and the localization node is implemented using
 2. Launch the simulation:
 
     ```bash
-    ros2 launch robot sim.launch.py world:=./src/robot/worlds/main.world gui:=false
+    ros2 launch robot_simulation sim.launch.py world:=./src/robot_simulation/worlds/main.world gui:=false
     ```
 
 > [!NOTE]
@@ -53,19 +53,19 @@ The simulation is done in Gazebo, and the localization node is implemented using
 3. Launch the localization node:
 
     ```bash
-    ros2 launch robot localization.launch.py map:=./src/robot/maps/main.yaml
+    ros2 launch robot_simulation localization.launch.py map:=./src/robot_simulation/maps/main.yaml
     ```
 
 4. (Optional) Run the navigation node:
 
     ```bash
-    ros2 launch robot navigation.launch.py
+    ros2 launch robot_simulation navigation.launch.py
     ```
 
 5. Launch the RViz visualization tool:
 
     ```bash
-    ros2 run rviz2 rviz2 -d ./src/robot/config/view_main.rviz --ros-args -p use_sim_time:=true
+    ros2 run rviz2 rviz2 -d ./src/robot_simulation/config/view_main.rviz --ros-args -p use_sim_time:=true
     ```
 
 6. Set the initial pose of the robot in RViz.
@@ -84,8 +84,8 @@ ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r /cmd_vel:=/di
 To create a map of the environment, use the `slam_toolbox` package:
 
 ```bash
-ros2 launch robot slam.launch.py
-ros2 run rviz2 rviz2 -d ./src/robot/config/view_map.rviz --ros-args -p use_sim_time:=true
+ros2 launch robot_simulation slam.launch.py
+ros2 run rviz2 rviz2 -d ./src/robot_simulation/config/view_map.rviz --ros-args -p use_sim_time:=true
 ```
 
 ## Acknowledgements

@@ -13,7 +13,7 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration("use_sim_time")
     params_file = LaunchConfiguration("params_file")
     default_params_file = os.path.join(
-        get_package_share_directory("robot"),
+        get_package_share_directory("robot_simulation"),
         "config",
         "mapper_params_online_async.yaml",
     )
