@@ -17,7 +17,7 @@ COPY ./src/ /root/ws/src/
 WORKDIR /root/ws
 
 RUN apt-get update -q && \
-    apt-get install -y --no-install-recommends \
+    apt-get install -y -q --no-install-recommends \
         bash-completion \
         command-not-found \
         curl \
@@ -35,7 +35,8 @@ RUN apt-get update -q && \
         ros-humble-rviz-imu-plugin \
         ros-humble-joint-state-publisher-gui \
         ros-humble-teleop-twist-keyboard && \
-    rosdep update && \
-    rosdep install --from-paths src --ignore-src -r -y -q && \
+    rosdep update --rosdistro=humble -q && \
+    rosdep install --from-paths src --ignore-src -y -q && \
+    rm -rf /root/.ros/ && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
