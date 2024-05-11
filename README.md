@@ -1,29 +1,51 @@
-# ROS2 Simulation of a Differential Robot
+# State Estimation using Factor Graphs
 
-This repository contains a ROS2 localization project. The demo consists of a simple robot that moves in a 2D space equipped with sensors for odometry and localization. The robot is controlled using a differential drive system. The simulation is done in Gazebo. For portability, the project is containerized using Docker.
+This repository contains a robot state estimation using factor graphs. The demo consists of a simple robot that moves in a 2D space. It is equipped with sensors for odometry and localization.
+
+The robot is controlled using a differential drive system, implemented with the Navigation2 stack. The state estimation is done using the GTSAM library. For comparison, the AMCL (Adaptive Monte Carlo Localization) localization node is also used. The simulation is done in Gazebo.
+
+<br>
+<div align="center">
+  <img src="docs/demo.gif"/>
+  <br><br>
+  <em>Robot state estimation (red vector: AMCL, blue: GTSAM).</em>
+</div>
+<br>
 
 ## Project Structure
 
 The project is divided into two packages:
 
-- `robot_simulation`: contains the Gazebo simulation of the robot, the AMCL localization node, and the navigation node.
+- `robot_simulation`: contains the xacro definition files of the robot, the AMCL localization, and navigation node launch files, and the Gazebo world files.
 - `state_estimation`: contains the GTSAM state estimation node.
 
 ### Robot Simulation Package
 
-The `robot_simulation` package contains the Gazebo simulation of the robot, the AMCL localization node, and the navigation node. The robot is equipped with a lidar, IMU, and wheel encoders. The package also contains launch files for running the simulation and the localization node.
+The robot is equipped with a lidar, an IMU (Inertial Measurement Unit), and wheel encoders. An EKF (Extended Kalman Filter) from the `robot_localization` package is used to fuse the odometry and IMU data to estimate the robot's pose.
+
+The data collected from the lidar and the odometry sensors is used by the AMCL node to localize the robot in the environment. The AMCL node subscribes to the laser scan data (`/scan`) and the non-filtered odometry data (`/diff_cont/odom`) and publishes the estimated pose of the robot (`/amcl_pose`).
+
+The robot is controlled using the Navigation2 stack. The `diff_drive_controller` is used to control the robot's velocity. The `nav2_controller` is used to navigate the robot to a goal position.
 
 The description of the robot is defined in the `description` directory. The `launch` directory contains the launch files for the simulation and the localization node. The `maps` directory contains the map of the environment. The `worlds` directory contains the Gazebo world files. Configuration files are stored in the `config` directory.
 
-An EKF is used to fuse the odometry and IMU data to estimate the robot's pose. The `robot_localization` package is used to perform the sensor fusion. The `amcl` package is used for localization.
+<br>
+<div align="center">
+  <img src="docs/robot.png" width="45%">
+&nbsp; &nbsp; &nbsp; &nbsp;
+  <img src="docs/gazebo_world.png" width="45%">
+  <br><br>
+  <em>Custom robot model and the Gazebo world.</em>
+</div>
+<br>
 
 ### State Estimation Package
 
-The `state_estimation` package contains a custom node that uses the GTSAM library to perform robot position estimation. The node subscribes to pose and odometry topics, processes the data using GTSAM's factor graphs and optimization algorithms, and then publishes an optimized pose estimate.
-
-The class `RobotPositionEstimator` is a subclass of `rclcpp::Node` designed to handle state estimation tasks in a ROS 2 environment. It subscribes to the Adaptive Monte Carlo Localization (AMCL) pose topic to get the pose with covariance and to a filtered odometry topic. The node publishes the optimized pose to the `/gtsam_pose` topic.
+The `state_estimation` package contains a custom node that uses the GTSAM library to perform robot position estimation. The node subscribes to pose (`/amcl_pose`) and odometry (`/odometry/filtered`) topics, processes the data using GTSAM's factor graphs and optimization algorithms, and then publishes the pose estimate (`/gtsam_pose`).
 
 ## Set up the Environment
+
+To run the simulation, you will need to have Docker installed on your machine. The project was developed using Docker version 26.1.1.
 
 1. Clone the repository:
 
@@ -31,7 +53,7 @@ The class `RobotPositionEstimator` is a subclass of `rclcpp::Node` designed to h
     git clone git@github.com:ikajdan/ros_differential_robot_simulation.git
     ```
 
-2. Build the container:
+2. Build the Docker image:
 
     ```bash
     ./build.sh
@@ -50,6 +72,8 @@ The class `RobotPositionEstimator` is a subclass of `rclcpp::Node` designed to h
     ```
 
 ## Run the Simulation
+
+To run the simulation, follow these steps:
 
 1. Source the workspace:
 
@@ -94,16 +118,20 @@ The class `RobotPositionEstimator` is a subclass of `rclcpp::Node` designed to h
 
 7. Set the initial pose of the robot in RViz.
 
+<br>
+<div align="center">
+  <img src="docs/map_loaded.png" width="45%">
+&nbsp; &nbsp; &nbsp; &nbsp;
+  <img src="docs/setup_complete.png" width="45%">
+  <br><br>
+  <em>Initial pose set in RViz.</em>
+</div>
+<br>
+
 > [!NOTE]
-> Make sure to set the fixed frame to `map`.
+> Make sure to set the fixed frame to `map` in RViz.
 
-## Tools
-
-To manually control the robot, you can use the `teleop_twist_keyboard` package:
-
-```bash
-ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r /cmd_vel:=/diff_cont/cmd_vel_unstamped
-```
+## World Mapping
 
 To create a map of the environment, use the `slam_toolbox` package:
 
@@ -112,13 +140,37 @@ ros2 launch robot_simulation slam.launch.py
 ros2 run rviz2 rviz2 -d ./src/robot_simulation/config/view_map.rviz --ros-args -p use_sim_time:=true
 ```
 
-This will launch the `slam_toolbox` node and RViz. Use the `teleop_twist_keyboard` package to move the robot around the environment and create a map.
+This will launch the `slam_toolbox` node and RViz. Use the `teleop_twist_keyboard` package to move the robot around the environment and create the map:
 
-## Acknowledgements
+```bash
+ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r /cmd_vel:=/diff_cont/cmd_vel_unstamped
+```
 
-The wast majority of the robot simulation code was based on the [Building a Mobile Robot](https://www.youtube.com/playlist?list=PLunhqkrRNRhYAffV8JDiFOatQXuU-NnxT) tutorial made by [Articulated Robotics](https://www.youtube.com/@ArticulatedRobotics).
+<br>
+<div align="center">
+  <img src="docs/world_mapping.png" width="45%">
+&nbsp; &nbsp; &nbsp; &nbsp;
+  <img src="docs/map_complete.png" width="45%">
+  <br><br>
+  <em>Mapping the environment using the "slam_toolbox" package.</em>
+</div>
+<br>
 
-The code for the GTSAM state estimation node was based on the following tutorial: [Factor Graphs and GTSAM](https://gtsam.org/tutorials/intro.html).
+Once the map is created, save it using the dialog in RViz to the [maps](src/robot_simulation/maps) directory. The generated map will be saved in the `pgm` and `yaml` format.
+
+<br>
+<div align="center">
+  <img src="docs/map.png">
+  <br><br>
+  <em>Generated map of the environment.</em>
+</div>
+<br>
+
+## References
+
+The wast majority of the robot simulation code is based on the [Building a Mobile Robot](https://www.youtube.com/playlist?list=PLunhqkrRNRhYAffV8JDiFOatQXuU-NnxT) tutorial made by [Articulated Robotics](https://www.youtube.com/@ArticulatedRobotics).
+
+The code for the GTSAM state estimation node is based on the following tutorial: [Factor Graphs and GTSAM](https://gtsam.org/tutorials/intro.html).
 
 Other resources used in the development of this project include:
 - https://automaticaddison.com/sensor-fusion-using-the-robot-localization-package-ros-2/
